@@ -1,0 +1,26 @@
+// prisma/schema.prisma
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL") // Make sure to set this in your .env file
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id       Int      @id @default(autoincrement())
+  username String   @unique
+  password String
+  role     String   @default("receptionist") // Can be "receptionist" or "doctor"
+  // patients Patient[]
+}
+
+model Patient {
+  id              Int      @id @default(autoincrement())
+  name            String
+  age             Int
+  dateRegistered  DateTime @default(now())
+  // userId       Int
+  // user            User     @relation(fields: [userId], references: [id])
+}
